@@ -1,26 +1,65 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './TodoListItem.css'
 
-const TodoListItem = ({ label, important = false }) => {
+export default class TodoListItem extends Component {
 
-    const style = {
-        color: important ? 'steelblue' : 'black',
-        fontWeight: important ? 'bold' : 'normal'
-      };
+    state = {
+        done: false,
+        important: false
+    }
 
-    return (
-        <div className='todo-list-item'>
-            <span style={style}>{label}</span>
-            <button type="button" className="btn border border-success text-success rounded  float-right">
-                <i class="fa fa-exclamation"></i>
-            </button>
-            <button type="button" className="btn rounded border-danger border text-danger float-right">
-                <i className="fa fa-trash" />
-            </button>
+    onImportantClick = () => {
+        this.setState(({ important }) => {
+            return {
+                important: !important
+            }
+        })
+    }
 
-        </div>
+    onLabelClick = () => {
+        this.setState(({ done }) => {
+            return {
+                done: !done
+            }
+        })
+    }
 
-    )
+
+    render() {
+        const { label, onDeleted } = this.props
+        const { important, done } = this.state;
+        let classNames = "todo-list-item";
+        if (important) {
+            classNames += ' important'
+        }
+        if (done) {
+            classNames += ' done';
+        }
+        return (
+            <span className={classNames}>
+                <span
+                    className="todo-list-item-label"
+                    onClick={this.onLabelClick}
+                >
+                    {label}</span>
+                <button
+                    type="button"
+                    className="btn border border-success text-success rounded  float-right"
+                    onClick={this.onImportantClick}
+                >
+                    <i className="fa fa-exclamation"></i>
+                </button>
+                <button
+                    type="button"
+                    className="btn rounded border-danger border text-danger float-right"
+                    onClick={onDeleted}
+                >
+                    <i className="fa fa-trash" />
+                </button>
+            </span>
+
+
+
+        )
+    }
 }
-
-export default TodoListItem;
