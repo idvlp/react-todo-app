@@ -1,5 +1,11 @@
 .item-add-form {
     margin-top: 25px;
-    display: block;
-    text-align: center;
+}
+
+.item-add-form > input {
+    margin-right: 10px;
+}
+
+.item-add-form > button {
+    width: 30%;
 }
